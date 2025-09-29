@@ -10,6 +10,7 @@ D:\dotnet\SimpleWebApp\obj\Debug\net8.0\SimpleWebApp.AssemblyInfoInputs.cache
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\SimpleWebApp.AssemblyInfo.cs
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\SimpleWebApp.csproj.CoreCompileInputs.cache
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\SimpleWebApp.MvcApplicationPartsAssemblyInfo.cache
+D:\dotnet\SimpleWebApp\obj\Debug\net8.0\SimpleWebApp.sourcelink.json
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\staticwebassets.build.json
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\staticwebassets.development.json
 D:\dotnet\SimpleWebApp\obj\Debug\net8.0\staticwebassets\msbuild.SimpleWebApp.Microsoft.AspNetCore.StaticWebAssets.props
