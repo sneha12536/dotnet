@@ -21,10 +21,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore SimpleWebApp/SimpleWebApp.csproj
 
     - name: Build project
-      run: dotnet build --configuration Release
+      run: dotnet build SimpleWebApp/SimpleWebApp.csproj --configuration Release
 
     - name: Publish build artifacts
       run: dotnet publish -c Release -o output
