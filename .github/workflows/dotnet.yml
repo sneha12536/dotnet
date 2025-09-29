@@ -1,0 +1,51 @@
+name: Build and Push Artifacts on Tag
+
+on:
+  push:
+    tags:
+      - '*'  # Run on any tag
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Required to create branches and push
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore SimpleWebApp/SimpleWebApp.csproj
+
+    - name: Build project
+      run: dotnet build SimpleWebApp/SimpleWebApp.csproj --configuration Release
+
+    - name: Publish build artifacts
+      run: dotnet publish -c Release -o output
+
+    - name: Prepare artifact folder
+      run: |
+        mkdir -p release-artifacts/${{ github.ref_name }}
+        cp -r output/* release-artifacts/${{ github.ref_name }}/
+
+    - name: Commit and push artifacts using PAT
+      env:
+        PAT: ${{ secrets.REPO_PAT }}
+        TAG_NAME: ${{ github.ref_name }}
+        REPO: ${{ github.repository }}
+      run: |
+        git config --global user.name "GitHub Action (via PAT)"
+        git config --global user.email "action@github.com"
+
+        git checkout -b artifacts/${TAG_NAME}
+
+        git add release-artifacts/
+        git commit -m "Add build artifacts for tag ${TAG_NAME}"
+
+        git push https://x-access-token:${PAT}@github.com/${REPO}.git HEAD:artifacts/${TAG_NAM_
