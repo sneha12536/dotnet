@@ -1,0 +1,43 @@
+
+name: .NET
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+
+permissions:
+  contents: write  # Needed so GITHUB_TOKEN can publish releases
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Publish build output
+      run: dotnet publish -c Release -o publish_output
+
+    - name: Upload release asset
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: publish_output/**
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ github.ref_name }}
+        allowUpdates: true          
+        replacesArtifacts: true     
